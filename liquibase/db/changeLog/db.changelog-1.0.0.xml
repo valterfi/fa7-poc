@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet author="e150731" id="1">
+	    <createSequence sequenceName="TPO_MENU_SEQUENCE" incrementBy="1" startValue="1" />
+	    
+        <createTable tableName="TPO_MENU">
+			<column name="MENU_ID" type="NUMBER(10)">
+				<constraints nullable="false" primaryKeyName="PK_TPO_MENU" unique="true"/>
+			</column>
+            <column name="LABEL" type="VARCHAR2(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ENABLED" type="NUMBER(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MENU_TYPE" type="VARCHAR2(10)">
+                <constraints nullable="false"  />
+            </column>
+            <column name="HASH_TAG" type="VARCHAR2(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PARENT_ID" type="NUMBER(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="URL" type="VARCHAR2(300)">
+            	<constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+        
+    <changeSet author="e150731" id="2">
+	    <createSequence sequenceName="TPO_ROLE_SEQUENCE" incrementBy="1" startValue="1" />
+	    
+        <createTable tableName="TPO_ROLE">
+			<column name="ROLE_ID" type="NUMBER(7)">
+				<constraints nullable="false" primaryKeyName="PK_TPO_ROLE" unique="true"/>
+			</column>
+			<column name="JANUS_ENTITLEMENT" type="NUMBER(20)">
+				<constraints nullable="false" />
+			</column>
+			<column name="ROLE_NAME" type="VARCHAR2(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="ROLE_DESCRIPTION" type="VARCHAR2(200)">
+				<constraints nullable="true" />
+			</column>
+        </createTable>
+		<addUniqueConstraint columnNames="ROLE_NAME" constraintName="UN_ROLE_NAME" tableName="TPO_ROLE"/>
+		<addUniqueConstraint columnNames="JANUS_ENTITLEMENT" constraintName="UN_JANUS_ENTITLEMENT" tableName="TPO_ROLE"/>
+    </changeSet>    
+        
+    <changeSet author="e150731" id="3">
+	    <createSequence sequenceName="TPO_MENU_ROLE_SEQUENCE" incrementBy="1" startValue="1" />
+	    
+        <createTable tableName="TPO_MENU_ROLE">
+       		<column name="MENU_ROLE_ID" type="NUMBER(10)">
+				<constraints nullable="false" primaryKeyName="PK_MENU_ROLE" />
+			</column>
+			<column name="MENU_ID" type="NUMBER(10)">
+				<constraints nullable="false" />
+			</column>
+			<column name="ROLE_ID" type="NUMBER(7)">
+				<constraints nullable="false" />
+			</column>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="MENU_ID"
+						         baseTableName="TPO_MENU_ROLE"
+						         constraintName="FK_MENUROLE_MENU"
+						         deferrable="false"
+						         initiallyDeferred="false"
+						         onDelete="NO ACTION"
+						         onUpdate="NO ACTION"
+						         referencedColumnNames="MENU_ID"
+						         referencedTableName="TPO_MENU"/>
+						         
+        <addForeignKeyConstraint baseColumnNames="ROLE_ID"
+						         baseTableName="TPO_MENU_ROLE"
+						         constraintName="FK_MENUROLE_ROLE"
+						         deferrable="false"
+						         initiallyDeferred="false"
+						         onDelete="NO ACTION"
+						         onUpdate="NO ACTION"
+						         referencedColumnNames="ROLE_ID"
+						         referencedTableName="TPO_ROLE"/>
+    </changeSet>
+ </databaseChangeLog>
