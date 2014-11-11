@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+	
+	<changeSet author="valterfi" id="2" >
+        <sql>insert into PERSON (ID, NAME) values (1, 'Axel')</sql>
+        <sql>insert into PERSON (ID, NAME) values (2, 'Mr. Foo')</sql>
+        <sql>insert into PERSON (ID, NAME) values (3, 'Ms. Bar')</sql>
+        <rollback>
+          	<sql>delete PERSON where ID = 1</sql>
+        	<sql>delete PERSON where ID = 2</sql>
+        	<sql>delete PERSON where ID = 3</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
