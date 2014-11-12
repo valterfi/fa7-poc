@@ -1,0 +1,15 @@
+flyway:migrate
+
+migration:init -X -Dmigration.path=src/main/resources
+
+migration:new -X -Dmigration.path=src/main/resources -Dmigration.description=my_second_schema_migration
+
+migration:status -X -Dmigration.path=src/main/resources
+
+migration:up -X -Dmigration.path=src/main/resources
+
+migration:down -X -Dmigration.path=src/main/resourcese
+
+liquibase:update -X
+
+liquibase:rollback -X -Dliquibase.rollbackCount=1
